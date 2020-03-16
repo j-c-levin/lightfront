@@ -14,7 +14,7 @@
     "macExecutableFilename": "",
     "orientation": "landscape",
     "packageName": "com.example.gamename",
-    "projectFile": "/Users/joshualevin/Documents/GDevelop Projects/lightrunner/game.json",
+    "projectFile": "/Users/joshualevin/Documents/GDevelop Projects/lightfront/game.json",
     "scaleMode": "linear",
     "sizeOnStartupMode": "adaptWidth",
     "useExternalSourceFiles": false,
@@ -163,6 +163,24 @@
         "name": "NewObject-1-4.png",
         "smoothed": true,
         "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "NewObject-1-5.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "NewObject-1-5.png",
+        "smoothed": true,
+        "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "connection-1.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "connection-1.png",
+        "smoothed": true,
+        "userAdded": false
       }
     ],
     "resourceFolders": []
@@ -202,6 +220,10 @@
         {
           "name": "links",
           "value": ""
+        },
+        {
+          "name": "connection_from",
+          "value": "-1"
         }
       ],
       "instances": [
@@ -213,8 +235,8 @@
           "locked": false,
           "name": "star",
           "width": 0,
-          "x": 302,
-          "y": 417,
+          "x": 55,
+          "y": 418,
           "zOrder": 1,
           "numberProperties": [],
           "stringProperties": [],
@@ -233,8 +255,8 @@
           "locked": false,
           "name": "planet",
           "width": 0,
-          "x": 348,
-          "y": 271,
+          "x": 101,
+          "y": 272,
           "zOrder": 2,
           "numberProperties": [],
           "stringProperties": [],
@@ -253,8 +275,8 @@
           "locked": false,
           "name": "planet",
           "width": 0,
-          "x": 346,
-          "y": 104,
+          "x": 99,
+          "y": 105,
           "zOrder": 3,
           "numberProperties": [],
           "stringProperties": [],
@@ -271,6 +293,21 @@
           "x": 512,
           "y": -81,
           "zOrder": 4,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "connection_drawer",
+          "width": 0,
+          "x": 418,
+          "y": -83,
+          "zOrder": 5,
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
@@ -461,6 +498,90 @@
               ]
             }
           ]
+        },
+        {
+          "name": "connection_drawer",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [
+            {
+              "name": "connection_drawer",
+              "type": "game::connection_drawer",
+              "state": "reset"
+            }
+          ],
+          "animations": [
+            {
+              "name": "NewObject",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "NewObject-1-5.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "connection",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "connection",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "connection-1.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 5,
+                        "y": 5
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ],
       "events": [
@@ -493,6 +614,10 @@
         }
       ],
       "behaviorsSharedData": [
+        {
+          "name": "connection_drawer",
+          "type": "game::connection_drawer"
+        },
         {
           "name": "controller",
           "type": "game::controller"
@@ -828,6 +953,74 @@
                     }
                   ],
                   "events": []
+                },
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "SourisSurObjet"
+                      },
+                      "parameters": [
+                        "Object",
+                        "",
+                        "",
+                        ""
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "SourisBouton"
+                      },
+                      "parameters": [
+                        "",
+                        "Left"
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "VarScene"
+                      },
+                      "parameters": [
+                        "connection_from",
+                        "=",
+                        "-1"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "actions": [],
+                  "events": [
+                    {
+                      "colorB": 228,
+                      "colorG": 176,
+                      "colorR": 74,
+                      "creationTime": 0,
+                      "disabled": false,
+                      "folded": false,
+                      "name": "Set planet as connection_from",
+                      "source": "",
+                      "type": "BuiltinCommonInstructions::Group",
+                      "events": [
+                        {
+                          "disabled": false,
+                          "folded": false,
+                          "type": "BuiltinCommonInstructions::JsCode",
+                          "inlineCode": "runtimeScene.getVariables().get(\"connection_from\").setNumber(objects[0].id)",
+                          "parameterObjects": "Object",
+                          "useStrict": true
+                        }
+                      ],
+                      "parameters": []
+                    }
+                  ]
                 }
               ],
               "parameters": [
@@ -876,7 +1069,7 @@
                       "disabled": false,
                       "folded": false,
                       "type": "BuiltinCommonInstructions::JsCode",
-                      "inlineCode": "const power = objects[0].getVariables().get(\"power\").getAsNumber()\nconst powerMax = objects[0].getVariables().get(\"power_max\").getAsNumber()\n\nconst ratio = power / powerMax\nconst brightness = 255 * ratio\n\nobjects[0].setColor(`${brightness};${brightness};${brightness}`)",
+                      "inlineCode": "const power = objects[0].getVariables().get(\"power\").getAsNumber()\nconst powerMax = objects[0].getVariables().get(\"power_max\").getAsNumber()\n\nconst ratio = power / powerMax\nconst brightness = 255 * ratio\nobjects[0].setColor(`${brightness};${brightness};${brightness}`)",
                       "parameterObjects": "Object",
                       "useStrict": true
                     }
@@ -910,6 +1103,370 @@
             }
           ],
           "propertyDescriptors": []
+        },
+        {
+          "description": "Draws connections between things",
+          "fullName": "Connection Drawer",
+          "name": "connection_drawer",
+          "objectType": "Sprite",
+          "eventsFunctions": [
+            {
+              "description": "",
+              "fullName": "",
+              "functionType": "Action",
+              "name": "onCreated",
+              "sentence": "",
+              "events": [
+                {
+                  "colorB": 228,
+                  "colorG": 176,
+                  "colorR": 74,
+                  "creationTime": 0,
+                  "disabled": false,
+                  "folded": false,
+                  "name": "Create connection object",
+                  "source": "",
+                  "type": "BuiltinCommonInstructions::Group",
+                  "events": [
+                    {
+                      "disabled": false,
+                      "folded": false,
+                      "type": "BuiltinCommonInstructions::JsCode",
+                      "inlineCode": "const conn = runtimeScene.createObject(\"connection\")\nconn.setX(-100)\nconn.setY(-100)",
+                      "parameterObjects": "",
+                      "useStrict": true
+                    }
+                  ],
+                  "parameters": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::connection_drawer",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            },
+            {
+              "description": "",
+              "fullName": "",
+              "functionType": "Action",
+              "name": "doStepPostEvents",
+              "sentence": "",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::connection_drawer::Propertystate"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        "=",
+                        "\"reset\""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::connection_drawer::reset"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        ""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                },
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::connection_drawer::Propertystate"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        "=",
+                        "\"draw\""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::connection_drawer::draw"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        ""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::connection_drawer",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            },
+            {
+              "description": "Reset state",
+              "fullName": "Reset state",
+              "functionType": "Action",
+              "name": "reset",
+              "sentence": "_PARAM0_ reset state",
+              "events": [
+                {
+                  "colorB": 228,
+                  "colorG": 176,
+                  "colorR": 74,
+                  "creationTime": 0,
+                  "disabled": false,
+                  "folded": false,
+                  "name": "Hide connection object",
+                  "source": "",
+                  "type": "BuiltinCommonInstructions::Group",
+                  "events": [
+                    {
+                      "disabled": false,
+                      "folded": false,
+                      "type": "BuiltinCommonInstructions::JsCode",
+                      "inlineCode": "const conn = runtimeScene.getObjects(\"connection\")[0]\nconn.setWidth(10)\nconn.setX(-100)\nconn.setY(-100)",
+                      "parameterObjects": "",
+                      "useStrict": true
+                    }
+                  ],
+                  "parameters": []
+                },
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "VarScene"
+                      },
+                      "parameters": [
+                        "connection_from",
+                        "!=",
+                        "-1"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::connection_drawer::SetPropertystate"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        "=",
+                        "\"draw\""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::connection_drawer",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            },
+            {
+              "description": "Draw state",
+              "fullName": "Draw state",
+              "functionType": "Action",
+              "name": "draw",
+              "sentence": "_PARAM0_ draw state",
+              "events": [
+                {
+                  "colorB": 228,
+                  "colorG": 176,
+                  "colorR": 74,
+                  "creationTime": 0,
+                  "disabled": false,
+                  "folded": true,
+                  "name": "Position Connection",
+                  "source": "",
+                  "type": "BuiltinCommonInstructions::Group",
+                  "events": [
+                    {
+                      "disabled": false,
+                      "folded": false,
+                      "type": "BuiltinCommonInstructions::JsCode",
+                      "inlineCode": "const connection_from = runtimeScene.getVariables().get(\"connection_from\").getAsNumber()\nconst source = runtimeScene.getObjects(\"planet\").find(o => o.id == connection_from)\n\nconst link = runtimeScene.getObjects(\"connection\")[0]\n\nlink.setX(source.getPointX(\"Center\"))\nlink.setY(source.getPointY(\"Center\"))\n\nconst destination = runtimeScene.getGame().getInputManager()\n\nlink.rotateTowardPosition(destination.getMouseX(), \n                            destination.getMouseY(), 0)\n\nconst distance = link.getSqDistanceTo(destination.getMouseX(),  destination.getMouseY())\nlink.setWidth(Math.sqrt(distance))\n\nconst midX = (source.getPointX(\"Center\") + destination.getMouseX()) / 2\nconst midY = (source.getPointY(\"Center\") + destination.getMouseY()) / 2\nlink.setX(midX)\nlink.setY(midY)",
+                      "parameterObjects": "Object",
+                      "useStrict": true
+                    }
+                  ],
+                  "parameters": []
+                },
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "MouseButtonReleased"
+                      },
+                      "parameters": [
+                        "",
+                        "Left"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::connection_drawer::SetPropertystate"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        "=",
+                        "\"reset\""
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarScene"
+                      },
+                      "parameters": [
+                        "connection_from",
+                        "=",
+                        "-1"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::connection_drawer",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            }
+          ],
+          "propertyDescriptors": [
+            {
+              "value": "reset",
+              "type": "String",
+              "label": "The current state ",
+              "description": "",
+              "extraInformation": [],
+              "hidden": true,
+              "name": "state"
+            }
+          ]
         }
       ]
     }
