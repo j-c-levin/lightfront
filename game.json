@@ -668,7 +668,7 @@
           "height": 0,
           "layer": "",
           "locked": false,
-          "name": "Star",
+          "name": "star",
           "persistentUuid": "018fce5b-73c8-4a15-b0b1-b4d7e6039f73",
           "width": 0,
           "x": 488,
@@ -745,7 +745,7 @@
       ],
       "objects": [
         {
-          "name": "Star",
+          "name": "star",
           "tags": "",
           "type": "Sprite",
           "updateIfNotVisible": false,
@@ -867,7 +867,7 @@
               },
               "parameters": [
                 "",
-                "Star",
+                "star",
                 "planet"
               ],
               "subInstructions": []
@@ -879,58 +879,21 @@
           "disabled": false,
           "folded": false,
           "type": "BuiltinCommonInstructions::Standard",
-          "conditions": [
+          "conditions": [],
+          "actions": [
             {
               "type": {
                 "inverted": false,
-                "value": "LinkedObjects::PickObjectsLinkedTo"
+                "value": "game::charge_tick"
               },
               "parameters": [
                 "",
-                "planet",
-                "Star"
+                ""
               ],
               "subInstructions": []
             }
           ],
-          "actions": [],
-          "events": [
-            {
-              "disabled": false,
-              "folded": false,
-              "type": "BuiltinCommonInstructions::Standard",
-              "conditions": [],
-              "actions": [
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "ModVarObjet"
-                  },
-                  "parameters": [
-                    "planet",
-                    "charge",
-                    "+",
-                    "1"
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "ModVarObjet"
-                  },
-                  "parameters": [
-                    "planet",
-                    "charge",
-                    "=",
-                    "min(planet.Variable(charge), planet.Variable(charge_max))"
-                  ],
-                  "subInstructions": []
-                }
-              ],
-              "events": []
-            }
-          ]
+          "events": []
         }
       ],
       "layers": [
@@ -1899,7 +1862,41 @@
       "shortDescription": "",
       "tags": "",
       "version": "",
-      "eventsFunctions": [],
+      "eventsFunctions": [
+        {
+          "description": "Update the charge of each planet connected to a start",
+          "fullName": "Run charge tick",
+          "functionType": "Action",
+          "name": "charge_tick",
+          "sentence": "Run charge tick",
+          "events": [
+            {
+              "colorB": 228,
+              "colorG": 176,
+              "colorR": 74,
+              "creationTime": 0,
+              "disabled": false,
+              "folded": false,
+              "name": "Charge tick",
+              "source": "",
+              "type": "BuiltinCommonInstructions::Group",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::JsCode",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    const planets = search(star)\n    planets.forEach(chargePlanet)\n})\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current).filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return removeRootStar(root, discovered)\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1\n}\n\nfunction removeRootStar(root, discovered) {\n    const index = discovered.indexOf(root)\n    discovered.splice(index, 1)\n    return discovered\n}\n\nfunction chargePlanet(planet) {\n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n    const charge = Math.min(current + 1, max)\n\n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
+                  "parameterObjects": "",
+                  "useStrict": true
+                }
+              ],
+              "parameters": []
+            }
+          ],
+          "parameters": [],
+          "objectGroups": []
+        }
+      ],
       "eventsBasedBehaviors": [
         {
           "description": "For planets",
