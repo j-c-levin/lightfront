@@ -796,7 +796,7 @@
           "variables": [
             {
               "name": "charge",
-              "value": "50"
+              "value": "0"
             },
             {
               "name": "charge_max",
@@ -863,12 +863,22 @@
             {
               "type": {
                 "inverted": false,
-                "value": "LinkedObjects::LinkObjects"
+                "value": "LinkedObjects::RemoveAllLinksOf"
               },
               "parameters": [
                 "",
-                "star",
-                "planet"
+                "star"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "game::setup"
+              },
+              "parameters": [
+                "",
+                ""
               ],
               "subInstructions": []
             }
@@ -1886,6 +1896,39 @@
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
                   "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    const planets = search(star)\n    planets.forEach(chargePlanet)\n})\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current).filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return removeRootStar(root, discovered)\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1\n}\n\nfunction removeRootStar(root, discovered) {\n    const index = discovered.indexOf(root)\n    discovered.splice(index, 1)\n    return discovered\n}\n\nfunction chargePlanet(planet) {\n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n    const charge = Math.min(current + 1, max)\n\n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
+                  "parameterObjects": "",
+                  "useStrict": true
+                }
+              ],
+              "parameters": []
+            }
+          ],
+          "parameters": [],
+          "objectGroups": []
+        },
+        {
+          "description": "links a couple of planets",
+          "fullName": "setup links",
+          "functionType": "Action",
+          "name": "setup",
+          "sentence": "setup links",
+          "events": [
+            {
+              "colorB": 228,
+              "colorG": 176,
+              "colorR": 74,
+              "creationTime": 0,
+              "disabled": false,
+              "folded": false,
+              "name": "Setup links",
+              "source": "",
+              "type": "BuiltinCommonInstructions::Group",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::JsCode",
+                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")[0]\r\n\r\nlinks.linkObjects(star, planets[0])\r\nlinks.linkObjects(planets[0], planets[1])",
                   "parameterObjects": "",
                   "useStrict": true
                 }
