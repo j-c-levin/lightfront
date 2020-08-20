@@ -703,8 +703,8 @@
           "name": "planet",
           "persistentUuid": "dddedb46-869f-40b3-abad-517933826884",
           "width": 0,
-          "x": 266,
-          "y": 553,
+          "x": 507,
+          "y": 995,
           "zOrder": 3,
           "numberProperties": [],
           "stringProperties": [],
@@ -735,8 +735,8 @@
           "name": "planet",
           "persistentUuid": "e091fbfc-7e73-4446-a280-18b3c35589bf",
           "width": 0,
-          "x": 259,
-          "y": 339,
+          "x": 507,
+          "y": 580,
           "zOrder": 5,
           "numberProperties": [],
           "stringProperties": [],
@@ -749,10 +749,10 @@
           "layer": "",
           "locked": false,
           "name": "planet",
-          "persistentUuid": "45a0bae4-bd53-4433-b00c-99a76e6a2862",
+          "persistentUuid": "f7cae724-5214-41d4-bff2-98585fe2d2c7",
           "width": 0,
-          "x": 248,
-          "y": 163,
+          "x": 264,
+          "y": 318,
           "zOrder": 5,
           "numberProperties": [],
           "stringProperties": [],
@@ -765,74 +765,10 @@
           "layer": "",
           "locked": false,
           "name": "planet",
-          "persistentUuid": "b6e16762-9355-4ac5-b98d-13f098c40a60",
+          "persistentUuid": "2e317ec4-f812-4aec-a763-c0b73490b07f",
           "width": 0,
-          "x": 244,
-          "y": 36,
-          "zOrder": 5,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": false,
-          "height": 0,
-          "layer": "",
-          "locked": false,
-          "name": "planet",
-          "persistentUuid": "0f32b75c-efea-40f7-9f16-9e6fc0815501",
-          "width": 0,
-          "x": 360,
-          "y": 36,
-          "zOrder": 5,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": false,
-          "height": 0,
-          "layer": "",
-          "locked": false,
-          "name": "planet",
-          "persistentUuid": "ec03b351-d74d-4cf2-8094-1c2cae4bb951",
-          "width": 0,
-          "x": 510,
-          "y": 32,
-          "zOrder": 5,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": false,
-          "height": 0,
-          "layer": "",
-          "locked": false,
-          "name": "planet",
-          "persistentUuid": "7c713961-9835-4b30-a23a-2b9284a9a04e",
-          "width": 0,
-          "x": 626,
-          "y": 32,
-          "zOrder": 5,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": false,
-          "height": 0,
-          "layer": "",
-          "locked": false,
-          "name": "planet",
-          "persistentUuid": "269ab47f-7e93-44a3-874d-d64e52b6223f",
-          "width": 0,
-          "x": 750,
-          "y": 32,
+          "x": 811,
+          "y": 397,
           "zOrder": 5,
           "numberProperties": [],
           "stringProperties": [],
@@ -1991,7 +1927,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    chargeNetwork(star)\n})\n\nfunction chargeNetwork(star) {\n    const roots = links.getObjectsLinkedWith(star)\n    roots.forEach(root => {\n        const planets = search(root)\n        planets.forEach(chargePlanet)\n    })\n}\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current).filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return discovered\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\n}\n\nfunction chargePlanet(planet, index) {\n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n    \n    // weight the charge towards the closer planets in the network\n    const baseRate = 1\n    const chargeRate = baseRate * (1 - (0.2 * index))\n\n    const charge = Math.min(current + chargeRate, max)\n    \n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    chargeNetwork(star)\n})\n\nfunction chargeNetwork(star) {\n    const roots = links.getObjectsLinkedWith(star)\n    roots.forEach(root => {\n        const planets = search(root)\n        planets.forEach(chargePlanet)\n    })\n}\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current).filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return discovered\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\n}\n\nfunction chargePlanet(planet, index, array) {\n    // weight the charge towards the closer planets in the network\n    const baseCharge = 2 / array.length\n    const ratio = (array.length === 1) ? 1 : 1.5 - (1 / (array.length - 1)) * index\n    const chargeRate = baseCharge * ratio\n\n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n\n    const charge = Math.min(current + chargeRate, max)\n    \n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2024,7 +1960,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")[0]\r\n\r\nlinks.linkObjects(star, planets[0])\r\nlinks.linkObjects(planets[0], planets[1])\r\nlinks.linkObjects(planets[1], planets[3])\r\nlinks.linkObjects(planets[3], planets[4])\r\nlinks.linkObjects(planets[4], planets[5])\r\nlinks.linkObjects(planets[5], planets[6])\r\nlinks.linkObjects(planets[6], planets[7])\r\nlinks.linkObjects(planets[7], planets[8])\r\nlinks.linkObjects(planets[8], planets[9])\r\n\r\nlinks.linkObjects(star, planets[2])\r\nlinks.linkObjects(planets[2], planets[9])",
+                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")[0]\r\n\r\nlinks.linkObjects(star, planets[0])\r\nlinks.linkObjects(planets[0], planets[1])\r\nlinks.linkObjects(planets[1], planets[2])\r\nlinks.linkObjects(planets[2], planets[3])\r\nlinks.linkObjects(planets[3], planets[4])\r\n\r\nlinks.linkObjects(planets[2], star)\r\nlinks.linkObjects(planets[2], planets[5])",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2033,6 +1969,50 @@
             }
           ],
           "parameters": [],
+          "objectGroups": []
+        },
+        {
+          "description": "Returns true if the planet is part of a network",
+          "fullName": "Is planet in network?",
+          "functionType": "Condition",
+          "name": "is_in_network",
+          "sentence": "Is _PARAM1_ in network",
+          "events": [
+            {
+              "colorB": 228,
+              "colorG": 176,
+              "colorR": 74,
+              "creationTime": 0,
+              "disabled": false,
+              "folded": false,
+              "name": "Network check",
+              "source": "",
+              "type": "BuiltinCommonInstructions::Group",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::JsCode",
+                  "inlineCode": "const planet = objects[0]\nconst links = runtimeScene.linkedObjectsManager\n\nconst inNetwork = links.getObjectsLinkedWith(planet).length > 0\n\neventsFunctionContext.returnValue = inNetwork",
+                  "parameterObjects": "Planet",
+                  "useStrict": true
+                }
+              ],
+              "parameters": []
+            }
+          ],
+          "parameters": [
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "Planet",
+              "longDescription": "",
+              "name": "Planet",
+              "optional": false,
+              "supplementaryInformation": "",
+              "type": "objectList"
+            }
+          ],
           "objectGroups": []
         }
       ],
@@ -2054,7 +2034,20 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::Standard",
-                  "conditions": [],
+                  "conditions": [
+                    {
+                      "type": {
+                        "inverted": true,
+                        "value": "game::is_in_network"
+                      },
+                      "parameters": [
+                        "",
+                        "Object",
+                        ""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
                   "actions": [
                     {
                       "type": {
@@ -2067,7 +2060,16 @@
                         ""
                       ],
                       "subInstructions": []
-                    },
+                    }
+                  ],
+                  "events": []
+                },
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
                     {
                       "type": {
                         "inverted": false,
