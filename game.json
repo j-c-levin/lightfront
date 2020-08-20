@@ -12,21 +12,21 @@
     "folderProject": false,
     "linuxExecutableFilename": "",
     "macExecutableFilename": "",
-    "orientation": "landscape",
-    "packageName": "com.example.gamename",
-    "projectFile": "/Users/joshualevin/Documents/GDevelop Projects/lightfront/game.json",
+    "orientation": "portrait",
+    "packageName": "com.jclevin.lightfront",
+    "projectFile": "C:\\Users\\joshu\\Documents\\GDevelop projects\\lightfront\\game.json",
     "scaleMode": "linear",
-    "sizeOnStartupMode": "adaptWidth",
+    "sizeOnStartupMode": "",
     "useExternalSourceFiles": false,
     "version": "1.0.0",
     "winExecutableFilename": "",
     "winExecutableIconFile": "",
-    "name": "Project",
-    "author": "",
-    "windowWidth": 800,
-    "windowHeight": 600,
+    "name": "Lightfront",
+    "author": "Joshua Levin",
+    "windowWidth": 1080,
+    "windowHeight": 1920,
     "latestCompilationDirectory": "",
-    "maxFPS": 60,
+    "maxFPS": 0,
     "minFPS": 20,
     "verticalSync": false,
     "platformSpecificAssets": {},
@@ -213,7 +213,7 @@
         "gridWidth": 32,
         "snap": true,
         "windowMask": false,
-        "zoomFactor": 1
+        "zoomFactor": 0.8138
       },
       "objectsGroups": [],
       "variables": [
@@ -234,6 +234,7 @@
           "layer": "",
           "locked": false,
           "name": "star",
+          "persistentUuid": "c8963405-aa8e-4fb4-a37d-280269840eb5",
           "width": 0,
           "x": 55,
           "y": 418,
@@ -254,6 +255,7 @@
           "layer": "",
           "locked": false,
           "name": "planet",
+          "persistentUuid": "59bffcdc-7763-4eed-99d0-b14c2128f9b6",
           "width": 0,
           "x": 101,
           "y": 272,
@@ -274,6 +276,7 @@
           "layer": "",
           "locked": false,
           "name": "planet",
+          "persistentUuid": "2dfeaf89-2ccd-468c-a54f-fa0dd038728e",
           "width": 0,
           "x": 99,
           "y": 105,
@@ -289,6 +292,7 @@
           "layer": "",
           "locked": false,
           "name": "controller",
+          "persistentUuid": "58b63b72-51f3-4fd5-a101-01d0a0f8f35d",
           "width": 0,
           "x": 512,
           "y": -81,
@@ -304,6 +308,7 @@
           "layer": "",
           "locked": false,
           "name": "connection_drawer",
+          "persistentUuid": "4d2eeaef-e813-4c72-a9cc-41ddd800dead",
           "width": 0,
           "x": 418,
           "y": -83,
@@ -380,7 +385,7 @@
           "behaviors": [
             {
               "name": "planet",
-              "type": "game::planet"
+              "type": "tutorial_1::planet"
             }
           ],
           "animations": [
@@ -424,7 +429,7 @@
           "behaviors": [
             {
               "name": "controller",
-              "type": "game::controller",
+              "type": "tutorial_1::controller",
               "links": ""
             }
           ],
@@ -508,7 +513,7 @@
           "behaviors": [
             {
               "name": "connection_drawer",
-              "type": "game::connection_drawer",
+              "type": "tutorial_1::connection_drawer",
               "state": "reset"
             }
           ],
@@ -616,12 +621,338 @@
       "behaviorsSharedData": [
         {
           "name": "connection_drawer",
-          "type": "game::connection_drawer"
+          "type": "tutorial_1::connection_drawer"
         },
         {
           "name": "controller",
-          "type": "game::controller"
+          "type": "tutorial_1::controller"
         },
+        {
+          "name": "planet",
+          "type": "tutorial_1::planet"
+        }
+      ]
+    },
+    {
+      "b": 0,
+      "disableInputWhenNotFocused": true,
+      "mangledName": "game",
+      "name": "game",
+      "oglFOV": 90,
+      "oglZFar": 500,
+      "oglZNear": 1,
+      "r": 0,
+      "standardSortMethod": true,
+      "stopSoundsOnStartup": true,
+      "title": "",
+      "v": 0,
+      "uiSettings": {
+        "grid": false,
+        "gridB": 255,
+        "gridG": 180,
+        "gridHeight": 32,
+        "gridOffsetX": 0,
+        "gridOffsetY": 0,
+        "gridR": 158,
+        "gridWidth": 32,
+        "snap": true,
+        "windowMask": false,
+        "zoomFactor": 0.2668
+      },
+      "objectsGroups": [],
+      "variables": [],
+      "instances": [
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "Star",
+          "persistentUuid": "018fce5b-73c8-4a15-b0b1-b4d7e6039f73",
+          "width": 0,
+          "x": 488,
+          "y": 748,
+          "zOrder": 1,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "planet",
+          "persistentUuid": "e9243fd7-116d-4451-b9bd-ea6dbd0f022b",
+          "width": 0,
+          "x": 259,
+          "y": 774,
+          "zOrder": 2,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "planet",
+          "persistentUuid": "dddedb46-869f-40b3-abad-517933826884",
+          "width": 0,
+          "x": 540,
+          "y": 534,
+          "zOrder": 3,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "planet",
+          "persistentUuid": "dff6ff3a-964e-41ea-9bc3-d3ac50998d3b",
+          "width": 0,
+          "x": 782,
+          "y": 774,
+          "zOrder": 4,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "planet",
+          "persistentUuid": "e091fbfc-7e73-4446-a280-18b3c35589bf",
+          "width": 0,
+          "x": 529,
+          "y": 1056,
+          "zOrder": 5,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        }
+      ],
+      "objects": [
+        {
+          "name": "Star",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [
+            {
+              "name": "capacity",
+              "value": "500"
+            }
+          ],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "NewObject-1-0.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "planet",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [
+            {
+              "name": "charge",
+              "value": "50"
+            },
+            {
+              "name": "charge_max",
+              "value": "50"
+            }
+          ],
+          "behaviors": [
+            {
+              "name": "planet",
+              "type": "game::planet"
+            }
+          ],
+          "animations": [
+            {
+              "name": "",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "NewObject-1-1.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "DepartScene"
+              },
+              "parameters": [
+                ""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "LinkedObjects::LinkObjects"
+              },
+              "parameters": [
+                "",
+                "Star",
+                "planet"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "LinkedObjects::PickObjectsLinkedTo"
+              },
+              "parameters": [
+                "",
+                "planet",
+                "Star"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [],
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarObjet"
+                  },
+                  "parameters": [
+                    "planet",
+                    "charge",
+                    "+",
+                    "1"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarObjet"
+                  },
+                  "parameters": [
+                    "planet",
+                    "charge",
+                    "=",
+                    "min(planet.Variable(charge), planet.Variable(charge_max))"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "name": "",
+          "visibility": true,
+          "cameras": [
+            {
+              "defaultSize": true,
+              "defaultViewport": true,
+              "height": 0,
+              "viewportBottom": 1,
+              "viewportLeft": 0,
+              "viewportRight": 1,
+              "viewportTop": 0,
+              "width": 0
+            }
+          ],
+          "effects": []
+        }
+      ],
+      "behaviorsSharedData": [
         {
           "name": "planet",
           "type": "game::planet"
@@ -636,7 +967,7 @@
       "description": "",
       "extensionNamespace": "",
       "fullName": "",
-      "name": "game",
+      "name": "tutorial_1",
       "shortDescription": "",
       "tags": "",
       "version": "",
@@ -675,7 +1006,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::controller::setup_game"
+                        "value": "tutorial_1::controller::setup_game"
                       },
                       "parameters": [
                         "Object",
@@ -687,7 +1018,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::controller::refresh_links"
+                        "value": "tutorial_1::controller::refresh_links"
                       },
                       "parameters": [
                         "Object",
@@ -708,7 +1039,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::controller::charge_network"
+                        "value": "tutorial_1::controller::charge_network"
                       },
                       "parameters": [
                         "Object",
@@ -739,7 +1070,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::controller",
+                  "supplementaryInformation": "tutorial_1::controller",
                   "type": "behavior"
                 }
               ],
@@ -793,7 +1124,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::controller",
+                  "supplementaryInformation": "tutorial_1::controller",
                   "type": "behavior"
                 }
               ],
@@ -847,7 +1178,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::controller",
+                  "supplementaryInformation": "tutorial_1::controller",
                   "type": "behavior"
                 }
               ],
@@ -901,7 +1232,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::controller",
+                  "supplementaryInformation": "tutorial_1::controller",
                   "type": "behavior"
                 }
               ],
@@ -942,7 +1273,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::planet::update_power"
+                        "value": "tutorial_1::planet::update_power"
                       },
                       "parameters": [
                         "Object",
@@ -1041,7 +1372,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::planet",
+                  "supplementaryInformation": "tutorial_1::planet",
                   "type": "behavior"
                 }
               ],
@@ -1095,7 +1426,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::planet",
+                  "supplementaryInformation": "tutorial_1::planet",
                   "type": "behavior"
                 }
               ],
@@ -1158,7 +1489,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::connection_drawer",
+                  "supplementaryInformation": "tutorial_1::connection_drawer",
                   "type": "behavior"
                 }
               ],
@@ -1179,7 +1510,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::Propertystate"
+                        "value": "tutorial_1::connection_drawer::Propertystate"
                       },
                       "parameters": [
                         "Object",
@@ -1194,7 +1525,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::reset"
+                        "value": "tutorial_1::connection_drawer::reset"
                       },
                       "parameters": [
                         "Object",
@@ -1214,7 +1545,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::Propertystate"
+                        "value": "tutorial_1::connection_drawer::Propertystate"
                       },
                       "parameters": [
                         "Object",
@@ -1229,7 +1560,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::draw"
+                        "value": "tutorial_1::connection_drawer::draw"
                       },
                       "parameters": [
                         "Object",
@@ -1249,7 +1580,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::Propertystate"
+                        "value": "tutorial_1::connection_drawer::Propertystate"
                       },
                       "parameters": [
                         "Object",
@@ -1264,7 +1595,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::released"
+                        "value": "tutorial_1::connection_drawer::released"
                       },
                       "parameters": [
                         "Object",
@@ -1295,7 +1626,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::connection_drawer",
+                  "supplementaryInformation": "tutorial_1::connection_drawer",
                   "type": "behavior"
                 }
               ],
@@ -1352,7 +1683,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::SetPropertystate"
+                        "value": "tutorial_1::connection_drawer::SetPropertystate"
                       },
                       "parameters": [
                         "Object",
@@ -1384,7 +1715,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::connection_drawer",
+                  "supplementaryInformation": "tutorial_1::connection_drawer",
                   "type": "behavior"
                 }
               ],
@@ -1440,7 +1771,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::SetPropertystate"
+                        "value": "tutorial_1::connection_drawer::SetPropertystate"
                       },
                       "parameters": [
                         "Object",
@@ -1472,7 +1803,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::connection_drawer",
+                  "supplementaryInformation": "tutorial_1::connection_drawer",
                   "type": "behavior"
                 }
               ],
@@ -1506,7 +1837,7 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::connection_drawer::SetPropertystate"
+                        "value": "tutorial_1::connection_drawer::SetPropertystate"
                       },
                       "parameters": [
                         "Object",
@@ -1538,7 +1869,7 @@
                   "longDescription": "",
                   "name": "Behavior",
                   "optional": false,
-                  "supplementaryInformation": "game::connection_drawer",
+                  "supplementaryInformation": "tutorial_1::connection_drawer",
                   "type": "behavior"
                 }
               ],
@@ -1556,6 +1887,263 @@
               "name": "state"
             }
           ]
+        }
+      ]
+    },
+    {
+      "author": "",
+      "description": "",
+      "extensionNamespace": "",
+      "fullName": "",
+      "name": "game",
+      "shortDescription": "",
+      "tags": "",
+      "version": "",
+      "eventsFunctions": [],
+      "eventsBasedBehaviors": [
+        {
+          "description": "For planets",
+          "fullName": "Planet",
+          "name": "planet",
+          "objectType": "Sprite",
+          "eventsFunctions": [
+            {
+              "description": "",
+              "fullName": "",
+              "functionType": "Action",
+              "name": "doStepPostEvents",
+              "sentence": "",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::planet::reduce_charge"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        ""
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::planet::update_colour"
+                      },
+                      "parameters": [
+                        "Object",
+                        "Behavior",
+                        ""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::planet",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            },
+            {
+              "description": "Passively burn a planet's charge",
+              "fullName": "Reduce Charge",
+              "functionType": "Action",
+              "name": "reduce_charge",
+              "sentence": "Reduce charge of _PARAM0_",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarObjet"
+                      },
+                      "parameters": [
+                        "Object",
+                        "charge",
+                        "-",
+                        "0.3"
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarObjet"
+                      },
+                      "parameters": [
+                        "Object",
+                        "charge",
+                        "=",
+                        "max(Object.Variable(charge), 0)"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::planet",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            },
+            {
+              "description": "Updates the colour of a planet based on the charge it has",
+              "fullName": "Update Colour",
+              "functionType": "Action",
+              "name": "update_colour",
+              "sentence": "Update colour of _PARAM0_",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ChangeColor"
+                      },
+                      "parameters": [
+                        "Object",
+                        "\"255;\" + ToString(Object.Behavior::calculate_colour()) + \";255\""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::planet",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            },
+            {
+              "description": "Calculates the colour of a planet based on its charge",
+              "fullName": "Calculate Colour",
+              "functionType": "Expression",
+              "name": "calculate_colour",
+              "sentence": "",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "SetReturnNumber"
+                      },
+                      "parameters": [
+                        "255 * (Object.Variable(charge) / Object.Variable(charge_max))"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "longDescription": "",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "longDescription": "",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "game::planet",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            }
+          ],
+          "propertyDescriptors": []
         }
       ]
     }
