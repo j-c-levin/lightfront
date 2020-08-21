@@ -1169,6 +1169,19 @@
                     "Left"
                   ],
                   "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "VarObjet"
+                  },
+                  "parameters": [
+                    "planet",
+                    "charge",
+                    ">",
+                    "0"
+                  ],
+                  "subInstructions": []
                 }
               ],
               "actions": [
