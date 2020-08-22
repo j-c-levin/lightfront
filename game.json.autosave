@@ -718,6 +718,10 @@
         {
           "name": "state",
           "value": "idle"
+        },
+        {
+          "name": "selected_charge",
+          "value": "0"
         }
       ],
       "instances": [
@@ -762,8 +766,8 @@
           "name": "planet",
           "persistentUuid": "dddedb46-869f-40b3-abad-517933826884",
           "width": 0,
-          "x": 888,
-          "y": 95,
+          "x": 728,
+          "y": 396,
           "zOrder": 3,
           "numberProperties": [],
           "stringProperties": [],
@@ -1252,13 +1256,12 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "game::circle_planets_in_range"
+                    "value": "ModVarScene"
                   },
                   "parameters": [
-                    "",
-                    "planet",
-                    "planet",
-                    ""
+                    "selected_charge",
+                    "=",
+                    "planet.Variable(charge)"
                   ],
                   "subInstructions": []
                 },
@@ -1272,6 +1275,19 @@
                     "selected",
                     "=",
                     "\"true\""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "game::circle_planets_in_range"
+                  },
+                  "parameters": [
+                    "",
+                    "planet",
+                    "planet",
+                    ""
                   ],
                   "subInstructions": []
                 }
@@ -1300,6 +1316,104 @@
           ],
           "actions": [],
           "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "SourisSurObjet"
+                  },
+                  "parameters": [
+                    "planet",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "VarObjet"
+                  },
+                  "parameters": [
+                    "planet",
+                    "charge",
+                    ">",
+                    "0"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": true,
+                    "value": "VarObjetTxt"
+                  },
+                  "parameters": [
+                    "planet",
+                    "selected",
+                    "=",
+                    "\"true\""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Delete"
+                  },
+                  "parameters": [
+                    "circle",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "selected_charge",
+                    "+",
+                    "planet.Variable(charge)"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarObjetTxt"
+                  },
+                  "parameters": [
+                    "planet",
+                    "selected",
+                    "=",
+                    "\"true\""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "game::circle_planets_in_range"
+                  },
+                  "parameters": [
+                    "",
+                    "planet",
+                    "planet",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
             {
               "disabled": false,
               "folded": false,
@@ -1338,6 +1452,18 @@
                     "state",
                     "=",
                     "\"idle\""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "selected_charge",
+                    "=",
+                    "0"
                   ],
                   "subInstructions": []
                 }
@@ -1385,15 +1511,37 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "SourisSurObjet"
+                        "value": "BuiltinCommonInstructions::And"
                       },
-                      "parameters": [
-                        "planet",
-                        "",
-                        "",
-                        ""
-                      ],
-                      "subInstructions": []
+                      "parameters": [],
+                      "subInstructions": [
+                        {
+                          "type": {
+                            "inverted": false,
+                            "value": "SourisSurObjet"
+                          },
+                          "parameters": [
+                            "planet",
+                            "",
+                            "",
+                            ""
+                          ],
+                          "subInstructions": []
+                        },
+                        {
+                          "type": {
+                            "inverted": false,
+                            "value": "SourisSurObjet"
+                          },
+                          "parameters": [
+                            "circle",
+                            "",
+                            "",
+                            ""
+                          ],
+                          "subInstructions": []
+                        }
+                      ]
                     }
                   ],
                   "actions": [
@@ -2515,7 +2663,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const selected = objects[0]\nconst charge = selected.getVariables().get(\"charge\").getAsNumber()\n\nconst planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n\nplanets.forEach(createCircle)\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    return links.getObjectsLinkedWith(planet).length === 0\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}",
+                  "inlineCode": "const selected = objects[0]\nconsole.log(runtimeScene.getVariables().get(\"selected_charge\").getAsNumber())\nconst planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n\nplanets.forEach(createCircle)\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    return links.getObjectsLinkedWith(planet).length === 0\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = runtimeScene.getVariables().get(\"selected_charge\").getAsNumber()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}",
                   "parameterObjects": "planet",
                   "useStrict": true
                 }
@@ -2589,6 +2737,16 @@
               "type": "objectList"
             }
           ],
+          "objectGroups": []
+        },
+        {
+          "description": "",
+          "fullName": "",
+          "functionType": "Action",
+          "name": "attempt_boost_charge",
+          "sentence": "",
+          "events": [],
+          "parameters": [],
           "objectGroups": []
         }
       ],
