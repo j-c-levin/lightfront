@@ -208,6 +208,33 @@
         "name": "selected-1.png",
         "smoothed": true,
         "userAdded": false
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "NewObject-1-1-1.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "NewObject-1-1-1.png",
+        "smoothed": true,
+        "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "in_range-1-0.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "in_range-1-0.png",
+        "smoothed": true,
+        "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "selected-1-0.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "selected-1-0.png",
+        "smoothed": true,
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -719,8 +746,8 @@
           "name": "planet",
           "persistentUuid": "e9243fd7-116d-4451-b9bd-ea6dbd0f022b",
           "width": 0,
-          "x": 371,
-          "y": 1377,
+          "x": 326,
+          "y": 1316,
           "zOrder": 2,
           "numberProperties": [],
           "stringProperties": [],
@@ -735,8 +762,8 @@
           "name": "planet",
           "persistentUuid": "dddedb46-869f-40b3-abad-517933826884",
           "width": 0,
-          "x": 766,
-          "y": 1213,
+          "x": 888,
+          "y": 95,
           "zOrder": 3,
           "numberProperties": [],
           "stringProperties": [],
@@ -847,8 +874,8 @@
           "name": "planet",
           "persistentUuid": "15119c37-5d89-48da-bd03-09f4a3b1aef0",
           "width": 0,
-          "x": 293,
-          "y": 1795,
+          "x": 159,
+          "y": 1680,
           "zOrder": 5,
           "numberProperties": [],
           "stringProperties": [],
@@ -863,8 +890,8 @@
           "name": "planet",
           "persistentUuid": "3e04e518-3d95-4d6a-9ebc-9cfe826b8b43",
           "width": 0,
-          "x": 934,
-          "y": 59,
+          "x": 789,
+          "y": 1201,
           "zOrder": 5,
           "numberProperties": [],
           "stringProperties": [],
@@ -959,7 +986,7 @@
           ],
           "animations": [
             {
-              "name": "",
+              "name": "NewObject-1-1",
               "useMultipleDirections": false,
               "directions": [
                 {
@@ -968,7 +995,7 @@
                   "sprites": [
                     {
                       "hasCustomCollisionMask": false,
-                      "image": "NewObject-1-1.png",
+                      "image": "NewObject-1-1-1.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
@@ -1007,12 +1034,12 @@
                   "sprites": [
                     {
                       "hasCustomCollisionMask": false,
-                      "image": "in_range-1.png",
+                      "image": "in_range-1-0.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
-                        "x": 45,
-                        "y": 45
+                        "x": 65,
+                        "y": 65
                       },
                       "centerPoint": {
                         "automatic": true,
@@ -1036,12 +1063,12 @@
                   "sprites": [
                     {
                       "hasCustomCollisionMask": false,
-                      "image": "selected-1.png",
+                      "image": "selected-1-0.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
-                        "x": 45,
-                        "y": 45
+                        "x": 65,
+                        "y": 65
                       },
                       "centerPoint": {
                         "automatic": true,
@@ -2411,7 +2438,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")[0]\r\n\r\nlinks.linkObjects(star, planets[0])",
+                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")\r\n\r\nlinks.linkObjects(star[0], planets[0])\r\nlinks.linkObjects(star[1], planets[1])",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2488,7 +2515,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const selected = objects[0]\n\nconst planets = runtimeScene.getObjects(\"planet\").filter(planet => planet !== selected)\n\nplanets.forEach(createCircle)\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}",
+                  "inlineCode": "const selected = objects[0]\nconst charge = selected.getVariables().get(\"charge\").getAsNumber()\n\nconst planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n\nplanets.forEach(createCircle)\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    return links.getObjectsLinkedWith(planet).length === 0\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}",
                   "parameterObjects": "planet",
                   "useStrict": true
                 }
