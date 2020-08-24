@@ -1265,19 +1265,6 @@
                     "\"true\""
                   ],
                   "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "game::circle_planets_in_range"
-                  },
-                  "parameters": [
-                    "",
-                    "planet",
-                    "planet",
-                    ""
-                  ],
-                  "subInstructions": []
                 }
               ],
               "events": []
@@ -2813,7 +2800,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const selected = objects[0]\n\nconst planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n\nplanets.forEach(createCircle)\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    return links.getObjectsLinkedWith(planet).includes(selected) === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}\n\nfunction getCharge() {\n    return runtimeScene.getObjects(\"planet\")\n                       .filter(inChain)\n                       .reduce(addCharge, 0)\n}\n\nfunction inChain(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() !== \"false\"\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}",
+                  "inlineCode": "const selected = objects[0]\nconst circle = runtimeScene.createObject(\"circle\")\ncircle.setX(selected.getPointX(\"Center\"))\ncircle.setY(selected.getPointY(\"Center\"))\ncircle.setAnimationName(\"selected\")\n\nconst planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n\nplanets.forEach(createCircle)\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    return links.getObjectsLinkedWith(planet).includes(selected) === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}\n\nfunction getCharge() {\n    return runtimeScene.getObjects(\"planet\")\n                       .filter(inChain)\n                       .reduce(addCharge, 0)\n}\n\nfunction inChain(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() !== \"false\"\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}",
                   "parameterObjects": "planet",
                   "useStrict": true
                 }
