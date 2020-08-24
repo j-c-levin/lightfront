@@ -1219,31 +1219,6 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "Create"
-                  },
-                  "parameters": [
-                    "",
-                    "circle",
-                    "planet.PointX(\"Center\")",
-                    "planet.PointY(\"Center\")",
-                    ""
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "SetAnimationName"
-                  },
-                  "parameters": [
-                    "circle",
-                    "\"selected\""
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
                     "value": "ModVarSceneTxt"
                   },
                   "parameters": [
@@ -1256,13 +1231,23 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "ModVarObjetTxt"
+                    "value": "game::start_chain"
                   },
                   "parameters": [
+                    "",
                     "planet",
-                    "selected",
-                    "=",
-                    "\"true\""
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "game::update_chain_visuals"
+                  },
+                  "parameters": [
+                    "",
+                    ""
                   ],
                   "subInstructions": []
                 }
@@ -1299,150 +1284,41 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "SourisSurObjet"
+                    "value": "BuiltinCommonInstructions::And"
                   },
-                  "parameters": [
-                    "planet",
-                    "",
-                    "",
-                    ""
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "VarObjet"
-                  },
-                  "parameters": [
-                    "planet",
-                    "charge",
-                    ">",
-                    "0"
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "VarObjetTxt"
-                  },
-                  "parameters": [
-                    "planet",
-                    "selected",
-                    "=",
-                    "\"false\""
-                  ],
-                  "subInstructions": []
-                }
-              ],
-              "actions": [],
-              "events": [
-                {
-                  "disabled": false,
-                  "folded": false,
-                  "type": "BuiltinCommonInstructions::ForEach",
-                  "object": "planet",
-                  "conditions": [],
-                  "actions": [],
-                  "events": [
-                    {
-                      "disabled": false,
-                      "folded": false,
-                      "type": "BuiltinCommonInstructions::Standard",
-                      "conditions": [
-                        {
-                          "type": {
-                            "inverted": false,
-                            "value": "VarObjetTxt"
-                          },
-                          "parameters": [
-                            "planet",
-                            "selected",
-                            "=",
-                            "\"last\""
-                          ],
-                          "subInstructions": []
-                        }
-                      ],
-                      "actions": [
-                        {
-                          "type": {
-                            "inverted": false,
-                            "value": "ModVarObjetTxt"
-                          },
-                          "parameters": [
-                            "planet",
-                            "selected",
-                            "=",
-                            "\"chain\""
-                          ],
-                          "subInstructions": []
-                        }
-                      ],
-                      "events": []
-                    },
-                    {
-                      "disabled": false,
-                      "folded": false,
-                      "type": "BuiltinCommonInstructions::Standard",
-                      "conditions": [
-                        {
-                          "type": {
-                            "inverted": false,
-                            "value": "VarObjetTxt"
-                          },
-                          "parameters": [
-                            "planet",
-                            "selected",
-                            "=",
-                            "\"true\""
-                          ],
-                          "subInstructions": []
-                        }
-                      ],
-                      "actions": [
-                        {
-                          "type": {
-                            "inverted": false,
-                            "value": "ModVarObjetTxt"
-                          },
-                          "parameters": [
-                            "planet",
-                            "selected",
-                            "=",
-                            "\"last\""
-                          ],
-                          "subInstructions": []
-                        }
-                      ],
-                      "events": []
-                    }
-                  ]
-                },
-                {
-                  "disabled": false,
-                  "folded": false,
-                  "type": "BuiltinCommonInstructions::Standard",
-                  "conditions": [],
-                  "actions": [
+                  "parameters": [],
+                  "subInstructions": [
                     {
                       "type": {
                         "inverted": false,
-                        "value": "ModVarObjetTxt"
+                        "value": "SourisSurObjet"
                       },
                       "parameters": [
                         "planet",
-                        "selected",
-                        "=",
-                        "\"true\""
+                        "",
+                        "",
+                        ""
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "SourisSurObjet"
+                      },
+                      "parameters": [
+                        "circle",
+                        "",
+                        "",
+                        ""
                       ],
                       "subInstructions": []
                     }
-                  ],
-                  "events": []
+                  ]
                 }
-              ]
+              ],
+              "actions": [],
+              "events": []
             },
             {
               "disabled": false,
@@ -1610,93 +1486,8 @@
                     }
                   ],
                   "events": []
-                },
-                {
-                  "disabled": false,
-                  "folded": false,
-                  "type": "BuiltinCommonInstructions::ForEach",
-                  "object": "planet",
-                  "conditions": [
-                    {
-                      "type": {
-                        "inverted": true,
-                        "value": "VarObjetTxt"
-                      },
-                      "parameters": [
-                        "planet",
-                        "selected",
-                        "=",
-                        "\"false\""
-                      ],
-                      "subInstructions": []
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": {
-                        "inverted": false,
-                        "value": "ModVarObjetTxt"
-                      },
-                      "parameters": [
-                        "planet",
-                        "selected",
-                        "=",
-                        "\"false\""
-                      ],
-                      "subInstructions": []
-                    }
-                  ],
-                  "events": []
                 }
               ]
-            },
-            {
-              "disabled": false,
-              "folded": false,
-              "type": "BuiltinCommonInstructions::ForEach",
-              "object": "planet",
-              "conditions": [
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "VarObjetTxt"
-                  },
-                  "parameters": [
-                    "planet",
-                    "selected",
-                    "=",
-                    "\"true\""
-                  ],
-                  "subInstructions": []
-                }
-              ],
-              "actions": [
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "Delete"
-                  },
-                  "parameters": [
-                    "circle",
-                    ""
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "game::circle_planets_in_range"
-                  },
-                  "parameters": [
-                    "",
-                    "planet",
-                    "planet",
-                    ""
-                  ],
-                  "subInstructions": []
-                }
-              ],
-              "events": []
             }
           ]
         }
@@ -2780,10 +2571,10 @@
         },
         {
           "description": "Highlights planets in range of selected planet",
-          "fullName": "Circle planets in range",
+          "fullName": "Update chain visuals",
           "functionType": "Action",
-          "name": "circle_planets_in_range",
-          "sentence": "Circle planets in range of _PARAM1_",
+          "name": "update_chain_visuals",
+          "sentence": "Update chain visuals for current network",
           "events": [
             {
               "colorB": 228,
@@ -2800,36 +2591,15 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const selected = objects[0]\nconst circle = runtimeScene.createObject(\"circle\")\ncircle.setX(selected.getPointX(\"Center\"))\ncircle.setY(selected.getPointY(\"Center\"))\ncircle.setAnimationName(\"selected\")\n\nconst planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n\nplanets.forEach(createCircle)\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    return links.getObjectsLinkedWith(planet).includes(selected) === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}\n\nfunction getCharge() {\n    return runtimeScene.getObjects(\"planet\")\n                       .filter(inChain)\n                       .reduce(addCharge, 0)\n}\n\nfunction inChain(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() !== \"false\"\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}",
-                  "parameterObjects": "planet",
+                  "inlineCode": "// clear field\nruntimeScene.getObjects(\"circle\").forEach(circle => {\n    runtimeScene.markObjectForDeletion(circle)\n})\n\nconst chain = runtimeScene.networkChain\n\nif (chain.length === 1) {\n    // show start and options\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(chain[0].getPointX(\"Center\"))\n    circle.setY(chain[0].getPointY(\"Center\"))\n    circle.setAnimationName(\"selected\")\n\n    const planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n    planets.forEach(createCircle)\n}\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    const alreadyLinked = links.getObjectsLinkedWith(planet).includes(selected)\n    return alreadyLinked === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}\n\nfunction getCharge() {\n    return runtimeScene.getObjects(\"planet\")\n                       .filter(inChain)\n                       .reduce(addCharge, 0)\n}\n\nfunction inChain(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() !== \"false\"\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}",
+                  "parameterObjects": "",
                   "useStrict": true
                 }
               ],
               "parameters": []
             }
           ],
-          "parameters": [
-            {
-              "codeOnly": false,
-              "defaultValue": "",
-              "description": "Planet",
-              "longDescription": "",
-              "name": "planet",
-              "optional": false,
-              "supplementaryInformation": "Sprite",
-              "type": "objectList"
-            },
-            {
-              "codeOnly": false,
-              "defaultValue": "",
-              "description": "behaviour",
-              "longDescription": "",
-              "name": "planet_behaviour",
-              "optional": false,
-              "supplementaryInformation": "game::planet",
-              "type": "behavior"
-            }
-          ],
+          "parameters": [],
           "objectGroups": []
         },
         {
@@ -2869,6 +2639,50 @@
               "description": "Whatever the mouse was over",
               "longDescription": "",
               "name": "celestial_body",
+              "optional": false,
+              "supplementaryInformation": "Sprite",
+              "type": "objectList"
+            }
+          ],
+          "objectGroups": []
+        },
+        {
+          "description": "Start a network chain",
+          "fullName": "Start Chain",
+          "functionType": "Action",
+          "name": "start_chain",
+          "sentence": "Start a network chain from _PARAM1_",
+          "events": [
+            {
+              "colorB": 228,
+              "colorG": 176,
+              "colorR": 74,
+              "creationTime": 0,
+              "disabled": false,
+              "folded": false,
+              "name": "Start Chain",
+              "source": "",
+              "type": "BuiltinCommonInstructions::Group",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::JsCode",
+                  "inlineCode": "runtimeScene.networkChain = [objects[0]]",
+                  "parameterObjects": "start",
+                  "useStrict": true
+                }
+              ],
+              "parameters": []
+            }
+          ],
+          "parameters": [
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "Start of the chain",
+              "longDescription": "",
+              "name": "start",
               "optional": false,
               "supplementaryInformation": "Sprite",
               "type": "objectList"
