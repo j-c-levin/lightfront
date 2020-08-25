@@ -976,10 +976,6 @@
             {
               "name": "charge_max",
               "value": "50"
-            },
-            {
-              "name": "selected",
-              "value": "false"
             }
           ],
           "behaviors": [
@@ -1337,100 +1333,8 @@
                   "subInstructions": []
                 }
               ],
-              "actions": [
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "Delete"
-                  },
-                  "parameters": [
-                    "circle",
-                    ""
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "ModVarSceneTxt"
-                  },
-                  "parameters": [
-                    "state",
-                    "=",
-                    "\"idle\""
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "ModVarScene"
-                  },
-                  "parameters": [
-                    "selected_charge",
-                    "=",
-                    "0"
-                  ],
-                  "subInstructions": []
-                }
-              ],
+              "actions": [],
               "events": [
-                {
-                  "disabled": false,
-                  "folded": false,
-                  "type": "BuiltinCommonInstructions::Standard",
-                  "conditions": [
-                    {
-                      "type": {
-                        "inverted": false,
-                        "value": "BuiltinCommonInstructions::And"
-                      },
-                      "parameters": [],
-                      "subInstructions": [
-                        {
-                          "type": {
-                            "inverted": false,
-                            "value": "SourisSurObjet"
-                          },
-                          "parameters": [
-                            "star",
-                            "",
-                            "",
-                            ""
-                          ],
-                          "subInstructions": []
-                        },
-                        {
-                          "type": {
-                            "inverted": false,
-                            "value": "SourisSurObjet"
-                          },
-                          "parameters": [
-                            "circle",
-                            "",
-                            "",
-                            ""
-                          ],
-                          "subInstructions": []
-                        }
-                      ]
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": {
-                        "inverted": false,
-                        "value": "game::attempt_create_link"
-                      },
-                      "parameters": [
-                        "",
-                        "star"
-                      ],
-                      "subInstructions": []
-                    }
-                  ],
-                  "events": []
-                },
                 {
                   "disabled": false,
                   "folded": false,
@@ -1476,11 +1380,55 @@
                     {
                       "type": {
                         "inverted": false,
-                        "value": "game::attempt_create_link"
+                        "value": "game::create_link"
                       },
                       "parameters": [
                         "",
-                        "planet"
+                        "planet",
+                        ""
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                },
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarSceneTxt"
+                      },
+                      "parameters": [
+                        "state",
+                        "=",
+                        "\"idle\""
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "game::reset_chain"
+                      },
+                      "parameters": [
+                        "",
+                        ""
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "Delete"
+                      },
+                      "parameters": [
+                        "circle",
+                        ""
                       ],
                       "subInstructions": []
                     }
@@ -2591,7 +2539,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "// clear field\nruntimeScene.getObjects(\"circle\").forEach(circle => {\n    runtimeScene.markObjectForDeletion(circle)\n})\n\nconst chain = runtimeScene.networkChain\n\nif (chain.length === 1) {\n    // show start and options\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(chain[0].getPointX(\"Center\"))\n    circle.setY(chain[0].getPointY(\"Center\"))\n    circle.setAnimationName(\"selected\")\n\n    const planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n    planets.forEach(createCircle)\n}\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    const alreadyLinked = links.getObjectsLinkedWith(planet).includes(selected)\n    return alreadyLinked === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}\n\nfunction getCharge() {\n    return runtimeScene.getObjects(\"planet\")\n                       .filter(inChain)\n                       .reduce(addCharge, 0)\n}\n\nfunction inChain(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() !== \"false\"\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}",
+                  "inlineCode": "// clear field\nruntimeScene.getObjects(\"circle\").forEach(circle => {\n    runtimeScene.markObjectForDeletion(circle)\n})\n\nconst chain = runtimeScene.networkChain\n\nif (chain.length === 0) {\n    // empty chain, do nothing\n    return\n}\n\nconst fromPlanet = chain[chain.length - 1]\n\nif (chain.length === 1) {\n    // show start and options\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(chain[0].getPointX(\"Center\"))\n    circle.setY(chain[0].getPointY(\"Center\"))\n    circle.setAnimationName(\"selected\")\n\n    const planets = runtimeScene.getObjects(\"planet\")\n                            .filter(inNetwork)\n                            .filter(inChain)\n                            .filter(inRange)\n                            .filter(samePlanet)\n\n    planets.forEach(createCircle)\n}\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    const alreadyLinked = links.getObjectsLinkedWith(planet).includes(fromPlanet)\n    return alreadyLinked === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== fromPlanet\n}\n\nfunction inRange(planet) {\n    const distance = fromPlanet.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge > distance / 10\n}\n\nfunction createCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n}\n\nfunction inChain(planet) {\n    return chain.includes(planet) === false\n}\n\nfunction getCharge() {\n    return chain.reduce(addCharge, 0)\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2606,7 +2554,7 @@
           "description": "Create a link between two celestial bodies",
           "fullName": "Create a link",
           "functionType": "Action",
-          "name": "attempt_create_link",
+          "name": "create_link",
           "sentence": "Create a link between selected and _PARAM1_",
           "events": [
             {
@@ -2624,7 +2572,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const target = objects[0]\nlet selected = runtimeScene.getObjects(\"planet\").find(source)\n\nif (target.getVariables().get(\"charge\").getAsNumber() > 0) {\n    selected = runtimeScene.getObjects(\"planet\").find(last)\n}\n\nif (selected === target) {\n    // can't link to itself\n    return\n}\n\nruntimeScene.linkedObjectsManager.linkObjects(target, selected)\n\n// exhaust the charge of all planets in the chain\nruntimeScene.getObjects(\"planet\")\n            .filter(inChain)\n            .forEach(exhaust)\n\nfunction last(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() === \"last\"\n}\n\nfunction source(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() === \"true\"\n}\n\nfunction inChain(planet) {\n    return planet.getVariables().get(\"selected\").getAsString() !== \"false\"\n}\n\nfunction exhaust(planet) {\n    planet.getVariables().get(\"charge\").setNumber(0)\n}",
+                  "inlineCode": "const target = objects[0]\n\nconst chain = runtimeScene.networkChain\nconst selected = chain[chain.length - 1]\n\nif (selected === target) {\n    // can't link to itself\n    return\n}\n\nconst links = runtimeScene.linkedObjectsManager\nconst alreadyConnected = links.getObjectsLinkedWith(selected).includes(target)\n\nif (alreadyConnected) {\n    // No point in re-linking\n    // Technically it shouldn't cause any problems but you can't be too sure\n    return\n}\n\nruntimeScene.linkedObjectsManager.linkObjects(target, selected)\n\n// exhaust the charge of all planets in the chain\nconst chainedPlanets = chain.forEach(exhaust)\n\nfunction exhaust(planet) {\n    planet.getVariables().get(\"charge\").setNumber(0)\n}",
                   "parameterObjects": "celestial_body",
                   "useStrict": true
                 }
@@ -2648,7 +2596,7 @@
         },
         {
           "description": "Start a network chain",
-          "fullName": "Start Chain",
+          "fullName": "Start chain",
           "functionType": "Action",
           "name": "start_chain",
           "sentence": "Start a network chain from _PARAM1_",
@@ -2688,6 +2636,39 @@
               "type": "objectList"
             }
           ],
+          "objectGroups": []
+        },
+        {
+          "description": "Ends a network chain",
+          "fullName": "Reset chain",
+          "functionType": "Action",
+          "name": "reset_chain",
+          "sentence": "Reset network chain",
+          "events": [
+            {
+              "colorB": 228,
+              "colorG": 176,
+              "colorR": 74,
+              "creationTime": 0,
+              "disabled": false,
+              "folded": false,
+              "name": "Reset chain",
+              "source": "",
+              "type": "BuiltinCommonInstructions::Group",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::JsCode",
+                  "inlineCode": "runtimeScene.networkChain = []",
+                  "parameterObjects": "",
+                  "useStrict": true
+                }
+              ],
+              "parameters": []
+            }
+          ],
+          "parameters": [],
           "objectGroups": []
         }
       ],
