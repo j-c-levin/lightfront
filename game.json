@@ -253,6 +253,24 @@
         "name": "in_range-1-1.png",
         "smoothed": true,
         "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "connection-1-1.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "connection-1-1.png",
+        "smoothed": true,
+        "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "connection-1-1-0.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "connection-1-1-0.png",
+        "smoothed": true,
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -1130,6 +1148,45 @@
               ]
             }
           ]
+        },
+        {
+          "name": "path",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "connection-1",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "connection-1-1-0.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 10,
+                        "y": 10
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ],
       "events": [
@@ -1572,6 +1629,17 @@
                   "type": {
                     "inverted": false,
                     "value": "game::reset_chain"
+                  },
+                  "parameters": [
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "game::visualise_network"
                   },
                   "parameters": [
                     "",
@@ -2574,7 +2642,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    chargeNetwork(star)\n})\n\nfunction chargeNetwork(star) {\n    const roots = links.getObjectsLinkedWith(star)\n    roots.forEach(root => {\n        const planets = search(root)\n        planets.forEach(chargePlanet)\n    })\n}\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current).filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return discovered\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\n}\n\nfunction chargePlanet(planet, index, array) {\n    // weight the charge towards the closer planets in the network\n    const baseCharge = 5 / array.length\n    const ratio = (array.length === 1) ? 1 : 1.5 - (1 / (array.length - 1)) * index\n    const chargeRate = baseCharge * ratio\n    \n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n\n    const charge = Math.min(current + chargeRate, max)\n    \n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    chargeNetwork(star)\n})\n\nfunction chargeNetwork(star) {\n    const roots = links.getObjectsLinkedWith(star)\n    roots.forEach(root => {\n        const planets = search(root)\n        planets.forEach(chargePlanet)\n    })\n}\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current)\n                           .filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return discovered\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\n}\n\nfunction chargePlanet(planet, index, array) {\n    // weight the charge towards the closer planets in the network\n    const baseCharge = 5 / array.length\n    const ratio = (array.length === 1) ? 1 : 1.5 - (1 / (array.length - 1)) * index\n    const chargeRate = baseCharge * ratio\n    \n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n\n    const charge = Math.min(current + chargeRate, max)\n    \n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2902,6 +2970,39 @@
               "type": "objectList"
             }
           ],
+          "objectGroups": []
+        },
+        {
+          "description": "Shows the links and chains for the networks",
+          "fullName": "Visualise network",
+          "functionType": "Action",
+          "name": "visualise_network",
+          "sentence": "Visualise the network",
+          "events": [
+            {
+              "colorB": 228,
+              "colorG": 176,
+              "colorR": 74,
+              "creationTime": 0,
+              "disabled": false,
+              "folded": false,
+              "name": "Visualise network",
+              "source": "",
+              "type": "BuiltinCommonInstructions::Group",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::JsCode",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\r\nconst links = runtimeScene.linkedObjectsManager\r\n\r\nstars.forEach(star => {\r\n    visualiseNetwork(star)\r\n})\r\n\r\nfunction visualiseNetwork(star) {\r\n    const roots = links.getObjectsLinkedWith(star)\r\n    roots.forEach(root => {\r\n        const planets = search(root)\r\n    })\r\n}\r\n\r\n// Breadth-first search over all planets connected to the star\r\nfunction search(root) {\r\n    const toSearch = [root]\r\n    const discovered = [root]\r\n\r\n    while (toSearch.length > 0) {\r\n        const current = toSearch.shift()\r\n        let planets = links.getObjectsLinkedWith(current)\r\n                           .filter(planet => removeDiscovered(planet, discovered))\r\n\r\n        planets.forEach(planet => drawPath(current, planet))\r\n        toSearch.push(...planets)\r\n        discovered.push(...planets)\r\n    }\r\n\r\n    return discovered\r\n}\r\n\r\nfunction drawPath(current, planet) {\r\n    const path = runtimeScene.createObject(\"path\")\r\n    const distance = current.getDistanceToObject(planet)\r\n    \r\n    path.setWidth(distance)\r\n    path.setX(midpoint(current.getPointX(\"Center\"), planet.getPointX(\"Center\")))\r\n    path.setY(midpoint(current.getPointY(\"Center\"), planet.getPointY(\"Center\")))\r\n    path.rotateTowardPosition(planet.getPointX(\"Center\"), planet.getPointY(\"Center\"), 0, 0)\r\n}\r\n\r\nfunction midpoint(a,b) {\r\n    return (a + b) / 2\r\n}\r\n\r\nfunction removeDiscovered(obj, discovered) {\r\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\r\n}\r\n",
+                  "parameterObjects": "",
+                  "useStrict": true
+                }
+              ],
+              "parameters": []
+            }
+          ],
+          "parameters": [],
           "objectGroups": []
         }
       ],
