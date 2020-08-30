@@ -1228,6 +1228,17 @@
                 ""
               ],
               "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "game::visualise_network"
+              },
+              "parameters": [
+                "",
+                ""
+              ],
+              "subInstructions": []
             }
           ],
           "events": []
@@ -1609,6 +1620,17 @@
                   },
                   "parameters": [
                     "circle",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Delete"
+                  },
+                  "parameters": [
+                    "path",
                     ""
                   ],
                   "subInstructions": []
@@ -2675,7 +2697,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")\r\n\r\nlinks.linkObjects(star[0], planets[0])\r\n// links.linkObjects(star[1], planets[1])",
+                  "inlineCode": "const links = runtimeScene.linkedObjectsManager\r\nconst planets = runtimeScene.getObjects(\"planet\")\r\nconst star = runtimeScene.getObjects(\"star\")\r\n\r\nlinks.linkObjects(star[0], planets[0])\r\nlinks.linkObjects(star[1], planets[1])",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2994,7 +3016,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\r\nconst links = runtimeScene.linkedObjectsManager\r\n\r\nstars.forEach(star => {\r\n    visualiseNetwork(star)\r\n})\r\n\r\nfunction visualiseNetwork(star) {\r\n    const roots = links.getObjectsLinkedWith(star)\r\n    roots.forEach(root => {\r\n        const planets = search(root)\r\n    })\r\n}\r\n\r\n// Breadth-first search over all planets connected to the star\r\nfunction search(root) {\r\n    const toSearch = [root]\r\n    const discovered = [root]\r\n\r\n    while (toSearch.length > 0) {\r\n        const current = toSearch.shift()\r\n        let planets = links.getObjectsLinkedWith(current)\r\n                           .filter(planet => removeDiscovered(planet, discovered))\r\n\r\n        planets.forEach(planet => drawPath(current, planet))\r\n        toSearch.push(...planets)\r\n        discovered.push(...planets)\r\n    }\r\n\r\n    return discovered\r\n}\r\n\r\nfunction drawPath(current, planet) {\r\n    const path = runtimeScene.createObject(\"path\")\r\n    const distance = current.getDistanceToObject(planet)\r\n    \r\n    path.setWidth(distance)\r\n    path.setX(midpoint(current.getPointX(\"Center\"), planet.getPointX(\"Center\")))\r\n    path.setY(midpoint(current.getPointY(\"Center\"), planet.getPointY(\"Center\")))\r\n    path.rotateTowardPosition(planet.getPointX(\"Center\"), planet.getPointY(\"Center\"), 0, 0)\r\n}\r\n\r\nfunction midpoint(a,b) {\r\n    return (a + b) / 2\r\n}\r\n\r\nfunction removeDiscovered(obj, discovered) {\r\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\r\n}\r\n",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\r\nconst links = runtimeScene.linkedObjectsManager\r\n\r\nstars.forEach(star => {\r\n    visualiseNetwork(star)\r\n})\r\n\r\nfunction visualiseNetwork(star) {\r\n    const roots = links.getObjectsLinkedWith(star)\r\n    roots.forEach(root => {\r\n        drawPath(root, star)\r\n        const planets = search(root)\r\n    })\r\n}\r\n\r\n// Breadth-first search over all planets connected to the star\r\nfunction search(root) {\r\n    const toSearch = [root]\r\n    const discovered = [root]\r\n\r\n    while (toSearch.length > 0) {\r\n        const current = toSearch.shift()\r\n        let planets = links.getObjectsLinkedWith(current)\r\n                           .filter(planet => removeDiscovered(planet, discovered))\r\n\r\n        planets.forEach(planet => drawPath(current, planet))\r\n        toSearch.push(...planets)\r\n        discovered.push(...planets)\r\n    }\r\n\r\n    return discovered\r\n}\r\n\r\nfunction drawPath(current, planet) {\r\n    const path = runtimeScene.createObject(\"path\")\r\n    const distance = current.getDistanceToObject(planet)\r\n    \r\n    path.setWidth(distance)\r\n    path.setX(midpoint(current.getPointX(\"Center\"), planet.getPointX(\"Center\")))\r\n    path.setY(midpoint(current.getPointY(\"Center\"), planet.getPointY(\"Center\")))\r\n    path.rotateTowardPosition(planet.getPointX(\"Center\"), planet.getPointY(\"Center\"), 0, 0)\r\n}\r\n\r\nfunction midpoint(a,b) {\r\n    return (a + b) / 2\r\n}\r\n\r\nfunction removeDiscovered(obj, discovered) {\r\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\r\n}\r\n",
                   "parameterObjects": "",
                   "useStrict": true
                 }
