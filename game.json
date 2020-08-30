@@ -271,6 +271,15 @@
         "name": "connection-1-1-0.png",
         "smoothed": true,
         "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "star-conneciton.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "star-conneciton.png",
+        "smoothed": true,
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -1185,6 +1194,35 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "star",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "star-conneciton.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 10,
+                        "y": 10
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -1600,6 +1638,77 @@
                   "parameters": [
                     "",
                     "planet",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            },
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "SourisSurObjet"
+                  },
+                  "parameters": [
+                    "star",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "SourisSurObjet"
+                  },
+                  "parameters": [
+                    "circle",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "AnimationName"
+                  },
+                  "parameters": [
+                    "circle",
+                    "\"in_range\""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": true,
+                    "value": "game::is_in_network"
+                  },
+                  "parameters": [
+                    "",
+                    "star",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "game::create_link"
+                  },
+                  "parameters": [
+                    "",
+                    "star",
                     ""
                   ],
                   "subInstructions": []
@@ -2664,7 +2773,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\n\nstars.forEach(star => {\n    chargeNetwork(star)\n})\n\nfunction chargeNetwork(star) {\n    const roots = links.getObjectsLinkedWith(star)\n    roots.forEach(root => {\n        const planets = search(root)\n        planets.forEach(chargePlanet)\n    })\n}\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current)\n                           .filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return discovered\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\n}\n\nfunction chargePlanet(planet, index, array) {\n    // weight the charge towards the closer planets in the network\n    const baseCharge = 5 / array.length\n    const ratio = (array.length === 1) ? 1 : 1.5 - (1 / (array.length - 1)) * index\n    const chargeRate = baseCharge * ratio\n    \n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n\n    const charge = Math.min(current + chargeRate, max)\n    \n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\nconst links = runtimeScene.linkedObjectsManager\nconst starPower = 3.5\n\nstars.forEach(star => {\n    chargeNetwork(star)\n})\n\nfunction chargeNetwork(star) {\n    const roots = links.getObjectsLinkedWith(star)\n    roots.forEach(root => {\n        const planets = search(root)\n        planets.forEach(chargePlanet)\n    })\n}\n\n// Breadth-first search over all planets connected to the star\nfunction search(root) {\n    const toSearch = [root]\n    const discovered = [root]\n\n    while (toSearch.length > 0) {\n        const current = toSearch.shift()\n        let planets = links.getObjectsLinkedWith(current)\n                           .filter(planet => removeDiscovered(planet, discovered))\n        toSearch.push(...planets)\n        discovered.push(...planets)\n    }\n\n    return discovered\n}\n\nfunction removeDiscovered(obj, discovered) {\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\n}\n\nfunction chargePlanet(planet, index, array) {\n    // weight the charge towards the closer planets in the network\n    const baseCharge = starPower / array.length\n    const ratio = (array.length === 1) ? 1 : 1.5 - (1 / (array.length - 1)) * index\n    const chargeRate = baseCharge * ratio\n    \n    const current = planet.getVariables().get(\"charge\").getAsNumber()\n    const max = planet.getVariables().get(\"charge_max\").getAsNumber()\n\n    const charge = Math.min(current + chargeRate, max)\n    \n    planet.getVariables().get(\"charge\").setNumber(charge)\n}",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -2774,7 +2883,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const chain = runtimeScene.networkChain\n\nif (chain.length === 0) {\n    // empty chain, do nothing\n    return\n}\n\n// selected has a thick circle\nconst selected = chain[chain.length - 1]\nthickCircle(selected)\n\n// everything in range has a thin circle\nconst planets = runtimeScene.getObjects(\"planet\")\n                        .filter(inNetwork)\n                        .filter(inRange)\n                        .filter(samePlanet)\n\nplanets.forEach(thinCircle)\n\n// planets already in the chain have a yelow circle\nchain.forEach(circleChainedPlanets)\n\nfunction circleChainedPlanets(planet) {\n    if (planet === selected) {\n        return\n    }\n\n    const circle = chainedCircle(planet)\n    return circle\n}\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    const alreadyLinked = links.getObjectsLinkedWith(planet).includes(selected)\n    return alreadyLinked === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge >= distance / 10\n}\n\nfunction getCharge() {\n    return chain.reduce(addCharge, 0)\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}\n\nfunction thinCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n    return circle\n}\n\nfunction thickCircle(planet) {\n    const circle = thinCircle(planet)\n    circle.setAnimationName(\"selected\")\n    return circle\n}\n\nfunction chainedCircle(planet) {\n    const circle = thinCircle(planet)\n    circle.setAnimationName(\"chained\")\n    return circle\n}",
+                  "inlineCode": "const chain = runtimeScene.networkChain\n\nif (chain.length === 0) {\n    // empty chain, do nothing\n    return\n}\n\n// selected has a thick circle\nconst selected = chain[chain.length - 1]\nthickCircle(selected)\n\n// everything in range has a thin circle\nconst planets = runtimeScene.getObjects(\"planet\")\n                        .filter(inNetwork)\n                        .filter(inRange)\n                        .filter(samePlanet)\n\nplanets.forEach(thinCircle)\n\nconst stars = runtimeScene.getObjects(\"star\")\n                        .filter(inNetwork)\n                        .filter(inRange)\n\nstars.forEach(thinCircle)\n\n// planets already in the chain have a yelow circle\nchain.forEach(circleChainedPlanets)\n\nfunction circleChainedPlanets(planet) {\n    if (planet === selected) {\n        return\n    }\n\n    const circle = chainedCircle(planet)\n    return circle\n}\n\nfunction inNetwork(planet) {\n    const links = runtimeScene.linkedObjectsManager\n    const alreadyLinked = links.getObjectsLinkedWith(planet).includes(selected)\n    return alreadyLinked === false\n}\n\nfunction samePlanet(planet) {\n    return planet !== selected\n}\n\nfunction inRange(planet) {\n    const distance = selected.getDistanceToObject(planet)\n    const charge = getCharge()\n    return charge >= distance / 10\n}\n\nfunction getCharge() {\n    return chain.reduce(addCharge, 0)\n}\n\nfunction addCharge(acc, current) {\n    return acc + current.getVariables().get(\"charge\").getAsNumber()\n}\n\nfunction thinCircle(planet) {\n    const circle = runtimeScene.createObject(\"circle\")\n    circle.setX(planet.getPointX(\"Center\"))\n    circle.setY(planet.getPointY(\"Center\"))\n    return circle\n}\n\nfunction thickCircle(planet) {\n    const circle = thinCircle(planet)\n    circle.setAnimationName(\"selected\")\n    return circle\n}\n\nfunction chainedCircle(planet) {\n    const circle = thinCircle(planet)\n    circle.setAnimationName(\"chained\")\n    return circle\n}",
                   "parameterObjects": "",
                   "useStrict": true
                 }
@@ -3016,7 +3125,7 @@
                   "disabled": false,
                   "folded": false,
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\r\nconst links = runtimeScene.linkedObjectsManager\r\n\r\nstars.forEach(star => {\r\n    visualiseNetwork(star)\r\n})\r\n\r\nfunction visualiseNetwork(star) {\r\n    const roots = links.getObjectsLinkedWith(star)\r\n    roots.forEach(root => {\r\n        drawPath(root, star)\r\n        const planets = search(root)\r\n    })\r\n}\r\n\r\n// Breadth-first search over all planets connected to the star\r\nfunction search(root) {\r\n    const toSearch = [root]\r\n    const discovered = [root]\r\n\r\n    while (toSearch.length > 0) {\r\n        const current = toSearch.shift()\r\n        let planets = links.getObjectsLinkedWith(current)\r\n                           .filter(planet => removeDiscovered(planet, discovered))\r\n\r\n        planets.forEach(planet => drawPath(current, planet))\r\n        toSearch.push(...planets)\r\n        discovered.push(...planets)\r\n    }\r\n\r\n    return discovered\r\n}\r\n\r\nfunction drawPath(current, planet) {\r\n    const path = runtimeScene.createObject(\"path\")\r\n    const distance = current.getDistanceToObject(planet)\r\n    \r\n    path.setWidth(distance)\r\n    path.setX(midpoint(current.getPointX(\"Center\"), planet.getPointX(\"Center\")))\r\n    path.setY(midpoint(current.getPointY(\"Center\"), planet.getPointY(\"Center\")))\r\n    path.rotateTowardPosition(planet.getPointX(\"Center\"), planet.getPointY(\"Center\"), 0, 0)\r\n}\r\n\r\nfunction midpoint(a,b) {\r\n    return (a + b) / 2\r\n}\r\n\r\nfunction removeDiscovered(obj, discovered) {\r\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\r\n}\r\n",
+                  "inlineCode": "const stars = runtimeScene.getObjects(\"star\")\r\nconst links = runtimeScene.linkedObjectsManager\r\n\r\nstars.forEach(star => {\r\n    visualiseNetwork(star)\r\n})\r\n\r\nfunction visualiseNetwork(star) {\r\n    const roots = links.getObjectsLinkedWith(star)\r\n    roots.forEach(root => {\r\n        drawPowerPath(root, star)\r\n        const planets = search(root)\r\n    })\r\n}\r\n\r\n// Breadth-first search over all planets connected to the star\r\nfunction search(root) {\r\n    const toSearch = [root]\r\n    const discovered = [root]\r\n\r\n    while (toSearch.length > 0) {\r\n        const current = toSearch.shift()\r\n        let planets = links.getObjectsLinkedWith(current)\r\n                           .filter(planet => removeDiscovered(planet, discovered))\r\n\r\n        planets.forEach(planet => drawPath(current, planet))\r\n        toSearch.push(...planets)\r\n        discovered.push(...planets)\r\n    }\r\n\r\n    return discovered\r\n}\r\n\r\nfunction drawPowerPath(planet, star) {\r\n    const path = drawPath(planet, star)\r\n    path.setAnimationName(\"star\")\r\n}\r\n\r\nfunction drawPath(current, planet) {\r\n    const path = runtimeScene.createObject(\"path\")\r\n    const distance = current.getDistanceToObject(planet)\r\n    \r\n    path.setWidth(distance)\r\n    path.setX(midpoint(current.getPointX(\"Center\"), planet.getPointX(\"Center\")))\r\n    path.setY(midpoint(current.getPointY(\"Center\"), planet.getPointY(\"Center\")))\r\n    path.rotateTowardPosition(planet.getPointX(\"Center\"), planet.getPointY(\"Center\"), 0, 0)\r\n    return path\r\n}\r\n\r\nfunction midpoint(a,b) {\r\n    return (a + b) / 2\r\n}\r\n\r\nfunction removeDiscovered(obj, discovered) {\r\n    return discovered.indexOf(obj) === -1 && obj.name !== \"star\"\r\n}\r\n",
                   "parameterObjects": "",
                   "useStrict": true
                 }
